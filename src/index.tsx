@@ -9,7 +9,7 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-    {/* <CatalogPage /> */}
-    <ProductPage />
+    <CatalogPage />
+    {/* <ProductPage /> */}
   </React.StrictMode>
 );
