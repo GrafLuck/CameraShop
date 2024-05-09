@@ -1,8 +1,12 @@
 import { Footer } from '../components/footer';
 import { Header } from '../components/header';
 import { ProductList } from '../components/product-list';
+import { useAppSelector } from '../hooks/use-app-selector';
+import { getProducts } from '../store/products-data/products-data.selectors';
 
 export function CatalogPage() {
+  const products = useAppSelector(getProducts);
+
   return (
     <div className="wrapper">
       <Header />
@@ -173,7 +177,7 @@ export function CatalogPage() {
                   </div>
                 </form>
               </div>*/}
-                  <ProductList />
+                  <ProductList products={products} />
                   {/*<div class="pagination">
                 <ul class="pagination__list">
                   <li class="pagination__item"><a class="pagination__link pagination__link&#45;&#45;active" href="1">1</a>

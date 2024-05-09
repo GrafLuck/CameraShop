@@ -1,18 +1,21 @@
-export function ProductCard() {
+import { TProduct } from '../types/product';
+
+type TProductProps = {
+  product: TProduct;
+};
+
+export function ProductCard({ product }: TProductProps) {
   return (
     <div className="product-card">
       <div className="product-card__img">
         <picture>
-          <source
-            type="image/webp"
-            srcSet="img/content/img1.webp, img/content/img1@2x.webp 2x"
-          />
+          <source type="image/webp" srcSet={product.previewImgWebp} />
           <img
             src="img/content/img1.jpg"
             srcSet="img/content/img1@2x.jpg 2x"
             width={280}
             height={240}
-            alt="Ретрокамера «Das Auge IV»"
+            alt={product.name}
           />
         </picture>
       </div>
@@ -33,15 +36,16 @@ export function ProductCard() {
           <svg width={17} height={16} aria-hidden="true">
             <use xlinkHref="#icon-star" />
           </svg>
-          <p className="visually-hidden">Рейтинг: 3</p>
+          <p className="visually-hidden">Рейтинг: {product.rating}</p>
           <p className="rate__count">
             <span className="visually-hidden">Всего оценок:</span>
-            23
+            {product.reviewCount}
           </p>
         </div>
-        <p className="product-card__title">Ретрокамера «Das Auge IV»</p>
+        <p className="product-card__title">{product.name}</p>
         <p className="product-card__price">
-          <span className="visually-hidden">Цена:</span>73 450 ₽
+          <span className="visually-hidden">Цена:</span>
+          {product.price} ₽
         </p>
       </div>
       <div className="product-card__buttons">

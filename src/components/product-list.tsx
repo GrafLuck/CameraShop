@@ -1,17 +1,16 @@
+import { TProduct } from '../types/product';
 import { ProductCard } from './product-card';
 
-export function ProductList() {
+type TProductListProps = {
+  products: TProduct[];
+};
+
+export function ProductList({ products }: TProductListProps) {
   return (
     <div className="cards catalog__cards">
-      <ProductCard />
-      <ProductCard />
-      <ProductCard />
-      <ProductCard />
-      <ProductCard />
-      <ProductCard />
-      <ProductCard />
-      <ProductCard />
-      <ProductCard />
+      {products.map((product) => (
+        <ProductCard product={product} key={product.id} />
+      ))}
     </div>
   );
 }
