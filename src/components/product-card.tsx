@@ -10,7 +10,6 @@ type TProductProps = {
 
 export function ProductCard({ product }: TProductProps) {
   const dispatch = useAppDispatch();
-
   const onBuyButtonClick = () => {
     dispatch(changeCallModalStatus(true));
   };

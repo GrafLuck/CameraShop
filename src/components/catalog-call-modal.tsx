@@ -1,8 +1,17 @@
+import { useAppDispatch } from '../hooks/use-app-dispatch';
+import { changeCallModalStatus } from '../store/modal-data/modal-data.slice';
+
 type TCatalogCallModalProps = {
   isActive: boolean;
 };
 
 export function CatalogCallModal({ isActive }: TCatalogCallModalProps) {
+  const dispatch = useAppDispatch();
+
+  const onCloseButtonClick = () => {
+    dispatch(changeCallModalStatus(false));
+  };
+
   return (
     <div className={isActive ? ' modal is-active' : 'modal'}>
       <div className="modal__wrapper">
@@ -63,6 +72,7 @@ export function CatalogCallModal({ isActive }: TCatalogCallModalProps) {
             className="cross-btn"
             type="button"
             aria-label="Закрыть попап"
+            onClick={onCloseButtonClick}
           >
             <svg width={10} height={10} aria-hidden="true">
               <use xlinkHref="#icon-close" />

@@ -198,7 +198,7 @@ export function CatalogPage() {
             </div>
           </section>
         </div>
-        {isCallModalStatus ? <CatalogCallModal isActive /> : ''}
+        <CatalogCallModal isActive={isCallModalStatus} />
       </main>
       <Footer />
     </div>
