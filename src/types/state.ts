@@ -9,3 +9,7 @@ export type TProductData = {
   products: TProduct[];
   isProductDataLoading: boolean;
 }
+
+export type TModalData = {
+  isCallModalActive: boolean;
+}

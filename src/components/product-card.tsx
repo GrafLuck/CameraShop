@@ -1,11 +1,20 @@
+import { useAppDispatch } from '../hooks/use-app-dispatch';
+import { changeCallModalStatus } from '../store/modal-data/modal-data.slice';
 import { TProduct } from '../types/product';
 import { RatingStarList } from './rating-star-list';
 
 type TProductProps = {
   product: TProduct;
+  // onBuyButtonClick: React.MouseEventHandler<HTMLElement>;
 };
 
 export function ProductCard({ product }: TProductProps) {
+  const dispatch = useAppDispatch();
+
+  const onBuyButtonClick = () => {
+    dispatch(changeCallModalStatus(true));
+  };
+
   return (
     <div className="product-card">
       <div className="product-card__img">
@@ -35,7 +44,11 @@ export function ProductCard({ product }: TProductProps) {
         </p>
       </div>
       <div className="product-card__buttons">
-        <button className="btn btn--purple product-card__btn" type="button">
+        <button
+          className="btn btn--purple product-card__btn"
+          type="button"
+          onClick={onBuyButtonClick}
+        >
           Купить
         </button>
         <a className="btn btn--transparent" href="#">
