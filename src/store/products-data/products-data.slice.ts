@@ -1,13 +1,14 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { NameSpace } from '../../const';
 import { TProductData } from '../../types/state';
-import { getProductsAction } from '../actions/api-actions';
+import { getProductByIdAction, getProductsAction } from '../actions/api-actions';
 import { TProduct } from '../../types/product';
 
 const initialState: TProductData = {
   products: [],
   currentProduct: undefined,
-  isProductDataLoading: true,
+  isProductsDataLoading: true,
+  isProductByIdLoading: false,
 };
 
 export const productData = createSlice({
@@ -16,14 +17,24 @@ export const productData = createSlice({
   extraReducers(builder) {
     builder
       .addCase(getProductsAction.pending, (state) => {
-        state.isProductDataLoading = true;
+        state.isProductsDataLoading = true;
       })
       .addCase(getProductsAction.fulfilled, (state, action) => {
         state.products = action.payload;
-        state.isProductDataLoading = false;
+        state.isProductsDataLoading = false;
       })
       .addCase(getProductsAction.rejected, (state) => {
-        state.isProductDataLoading = false;
+        state.isProductsDataLoading = false;
+      })
+      .addCase(getProductByIdAction.pending, (state) => {
+        state.isProductByIdLoading = true;
+      })
+      .addCase(getProductByIdAction.fulfilled, (state, action) => {
+        state.currentProduct = action.payload;
+        state.isProductByIdLoading = false;
+      })
+      .addCase(getProductByIdAction.rejected, (state) => {
+        state.isProductByIdLoading = false;
       });
   },
   reducers: {

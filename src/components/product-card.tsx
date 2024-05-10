@@ -1,8 +1,10 @@
+import { Link } from 'react-router-dom';
 import { useAppDispatch } from '../hooks/use-app-dispatch';
 import { changeCallModalStatus } from '../store/modal-data/modal-data.slice';
 import { changeCurrentProduct } from '../store/products-data/products-data.slice';
 import { TProduct } from '../types/product';
 import { RatingStarList } from './rating-star-list';
+import { AppRoute } from '../app-route';
 
 type TProductProps = {
   product: TProduct;
@@ -52,9 +54,12 @@ export function ProductCard({ product }: TProductProps) {
         >
           Купить
         </button>
-        <a className="btn btn--transparent" href="#">
+        <Link
+          className="btn btn--transparent"
+          to={`${AppRoute.Product}/${product.id}`}
+        >
           Подробнее
-        </a>
+        </Link>
       </div>
     </div>
   );

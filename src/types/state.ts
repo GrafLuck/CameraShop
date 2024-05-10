@@ -8,7 +8,8 @@ export type AppDispatch = typeof store.dispatch;
 export type TProductData = {
   products: TProduct[];
   currentProduct: TProduct | undefined;
-  isProductDataLoading: boolean;
+  isProductsDataLoading: boolean;
+  isProductByIdLoading: boolean;
 }
 
 export type TModalData = {

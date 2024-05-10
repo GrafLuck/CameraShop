@@ -6,12 +6,12 @@ import { ProductPage } from '../pages/product-page';
 import LoadingScreen from '../pages/loading-screen/loading-screen';
 
 import { useAppSelector } from '../hooks/use-app-selector';
-import { getIsProductDataLoading } from '../store/products-data/products-data.selectors';
+import { getisProductsDataLoading } from '../store/products-data/products-data.selectors';
 
 function App(): React.JSX.Element {
-  const IsProductDataLoadingStatus = useAppSelector(getIsProductDataLoading);
+  const isProductsDataLoadingStatus = useAppSelector(getisProductsDataLoading);
 
-  if (IsProductDataLoadingStatus) {
+  if (isProductsDataLoadingStatus) {
     return <LoadingScreen />;
   }
 
@@ -20,7 +20,7 @@ function App(): React.JSX.Element {
       <BrowserRouter>
         <Routes>
           <Route path={AppRoute.Catalog} element={<CatalogPage />} />
-          <Route path={AppRoute.Product} element={<ProductPage />} />
+          <Route path={`${AppRoute.Product}/:id`} element={<ProductPage />} />
         </Routes>
       </BrowserRouter>
     </HelmetProvider>

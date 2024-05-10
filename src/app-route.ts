@@ -1,5 +1,5 @@
 export const AppRoute = {
   Catalog: '/',
-  Product: '/product',
+  Product: '/camera',
   Error: '*'
 };
