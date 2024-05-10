@@ -1,10 +1,12 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { NameSpace } from '../../const';
 import { TProductData } from '../../types/state';
 import { getProductsAction } from '../actions/api-actions';
+import { TProduct } from '../../types/product';
 
 const initialState: TProductData = {
   products: [],
+  currentProduct: undefined,
   isProductDataLoading: true,
 };
 
@@ -24,5 +26,11 @@ export const productData = createSlice({
         state.isProductDataLoading = false;
       });
   },
-  reducers: {},
+  reducers: {
+    changeCurrentProduct: (state, action: PayloadAction<TProduct>) => {
+      state.currentProduct = action.payload;
+    },
+  },
 });
+
+export const { changeCurrentProduct } = productData.actions;

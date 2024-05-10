@@ -1,5 +1,6 @@
 import { useAppDispatch } from '../hooks/use-app-dispatch';
 import { changeCallModalStatus } from '../store/modal-data/modal-data.slice';
+import { changeCurrentProduct } from '../store/products-data/products-data.slice';
 import { TProduct } from '../types/product';
 import { RatingStarList } from './rating-star-list';
 
@@ -11,6 +12,7 @@ type TProductProps = {
 export function ProductCard({ product }: TProductProps) {
   const dispatch = useAppDispatch();
   const onBuyButtonClick = () => {
+    dispatch(changeCurrentProduct(product));
     dispatch(changeCallModalStatus(true));
   };
 

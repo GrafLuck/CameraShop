@@ -1,5 +1,7 @@
 import { useAppDispatch } from '../hooks/use-app-dispatch';
+import { useAppSelector } from '../hooks/use-app-selector';
 import { changeCallModalStatus } from '../store/modal-data/modal-data.slice';
+import { getCurrentProduct } from '../store/products-data/products-data.selectors';
 
 type TCatalogCallModalProps = {
   isActive: boolean;
@@ -7,10 +9,15 @@ type TCatalogCallModalProps = {
 
 export function CatalogCallModal({ isActive }: TCatalogCallModalProps) {
   const dispatch = useAppDispatch();
+  const product = useAppSelector(getCurrentProduct);
 
   const onCloseButtonClick = () => {
     dispatch(changeCallModalStatus(false));
   };
+
+  if (!product) {
+    return;
+  }
 
   return (
     <div className={isActive ? ' modal is-active' : 'modal'}>
@@ -21,22 +28,38 @@ export function CatalogCallModal({ isActive }: TCatalogCallModalProps) {
           <div className="basket-item basket-item--short">
             <div className="basket-item__img">
               <picture>
-                <source type="image/webp" srcSet={''} />
-                <img src={''} srcSet={''} width={140} height={120} alt={''} />
+                <source
+                  type="image/webp"
+                  srcSet={`${product.previewImgWebp}, ${product.previewImgWebp2x} 2x`}
+                />
+                <img
+                  src={product.previewImg}
+                  srcSet={`${product.previewImg2x} 2x`}
+                  width={140}
+                  height={120}
+                  alt={product.name}
+                />
               </picture>
             </div>
             <div className="basket-item__description">
-              <p className="basket-item__title"></p>
+              <p className="basket-item__title">{product.name}</p>
               <ul className="basket-item__list">
                 <li className="basket-item__list-item">
-                  <span className="basket-item__article">Артикул:</span>{' '}
-                  <span className="basket-item__number"></span>
+                  <span className="basket-item__article">Артикул: </span>
+                  <span className="basket-item__number">
+                    {product.vendorCode}
+                  </span>
                 </li>
-                <li className="basket-item__list-item">фотокамера</li>
-                <li className="basket-item__list-item">уровень</li>
+                <li className="basket-item__list-item">
+                  {product.type} фотокамера
+                </li>
+                <li className="basket-item__list-item">
+                  {product.level} уровень
+                </li>
               </ul>
               <p className="basket-item__price">
-                <span className="visually-hidden">Цена:</span>₽
+                <span className="visually-hidden">Цена: </span>
+                {product.price} ₽
               </p>
             </div>
           </div>

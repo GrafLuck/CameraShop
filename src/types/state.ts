@@ -7,6 +7,7 @@ export type AppDispatch = typeof store.dispatch;
 
 export type TProductData = {
   products: TProduct[];
+  currentProduct: TProduct | undefined;
   isProductDataLoading: boolean;
 }
 
