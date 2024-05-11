@@ -5,4 +5,5 @@ export enum APIRoute {
 export enum NameSpace {
   Product = 'PRODUCT',
   Modal = 'MODAL',
+  Review = 'REVIEW',
 }

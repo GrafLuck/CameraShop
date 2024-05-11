@@ -3,6 +3,7 @@ import { AxiosInstance } from 'axios';
 import { AppDispatch, State } from '../../types/state';
 import { APIRoute } from '../../const';
 import { TProduct } from '../../types/product';
+import { TReview } from '../../types/review';
 
 export const getProductsAction = createAsyncThunk<TProduct[], undefined, {
   dispatch: AppDispatch;
@@ -24,6 +25,18 @@ export const getProductByIdAction = createAsyncThunk<TProduct, string, {
   'productData/getProductById',
   async (id, {extra: api}) => {
     const {data} = await api.get<TProduct>(`${APIRoute.Product}/${id}`);
+    return data;
+  },
+);
+
+export const getReviewsByIdAction = createAsyncThunk<TReview[], string, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'reviewData/getReviewsById',
+  async (id, {extra: api}) => {
+    const {data} = await api.get<TReview[]>(`${APIRoute.Product}/${id}/reviews`);
     return data;
   },
 );
