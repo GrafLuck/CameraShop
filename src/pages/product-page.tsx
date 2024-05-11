@@ -54,7 +54,7 @@ export function ProductPage() {
                 </li>
                 <li className="breadcrumbs__item">
                   <span className="breadcrumbs__link breadcrumbs__link--active">
-                    Ретрокамера «Das Auge IV»
+                    {product.name}
                   </span>
                 </li>
               </ul>
