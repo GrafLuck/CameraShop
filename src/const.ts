@@ -7,3 +7,5 @@ export enum NameSpace {
   Modal = 'MODAL',
   Review = 'REVIEW',
 }
+
+export const MAX_COMMENTS_COUNT = 3;

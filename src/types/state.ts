@@ -19,5 +19,6 @@ export type TModalData = {
 
 export type TReviewData = {
   reviews: TReview[];
+  sortingByDateReviews: TReview[];
   isReviewsDataLoading: boolean;
 }

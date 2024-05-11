@@ -16,15 +16,19 @@ import LoadingScreen from './loading-screen/loading-screen';
 import { RatingStarList } from '../components/rating-star-list';
 import {
   getReviews,
+  getSortingByDateReviews,
   getisReviewsLoading,
 } from '../store/reviews-data/reviews-data.selectors';
 import { ReviewList } from '../components/review-list';
+import { MAX_COMMENTS_COUNT } from '../const';
+import { TReview } from '../types/review';
 
 export function ProductPage() {
   const { id } = useParams();
   const dispatch = useAppDispatch();
   const product = useAppSelector(getCurrentProduct);
   const reviews = useAppSelector(getReviews);
+  const sortingByDateReviews = useAppSelector(getSortingByDateReviews);
   const isCurrentProductLoading = useAppSelector(getisProductByIdLoading);
   const isReviewsLoading = useAppSelector(getisReviewsLoading);
   const [activeTab, setActiveTab] = useState<string>('Description');
@@ -43,6 +47,14 @@ export function ProductPage() {
   const onDescriptionButtonClick = () => {
     setActiveTab('Description');
   };
+
+  function limitReviewsItems(allReviews: TReview[]) {
+    if (allReviews.length <= MAX_COMMENTS_COUNT) {
+      return sortingByDateReviews;
+    } else {
+      return sortingByDateReviews.slice(0, MAX_COMMENTS_COUNT);
+    }
+  }
 
   if (isCurrentProductLoading || !product || isReviewsLoading || !id) {
     return <LoadingScreen />;
@@ -440,7 +452,7 @@ export function ProductPage() {
                   <h2 className="title title--h3">Отзывы</h2>
                   {/*<button class="btn" type="button">Оставить свой отзыв</button>*/}
                 </div>
-                <ReviewList reviews={reviews} />
+                <ReviewList reviews={limitReviewsItems(sortingByDateReviews)} />
                 <div className="review-block__buttons">
                   <button className="btn btn--purple" type="button">
                     Показать больше отзывов
