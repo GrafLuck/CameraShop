@@ -3,7 +3,7 @@ import { Footer } from '../components/footer';
 import { Header } from '../components/header';
 import { useAppDispatch } from '../hooks/use-app-dispatch';
 import { getProductByIdAction } from '../store/actions/api-actions';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useAppSelector } from '../hooks/use-app-selector';
 import {
   getCurrentProduct,
@@ -17,12 +17,21 @@ export function ProductPage() {
   const dispatch = useAppDispatch();
   const product = useAppSelector(getCurrentProduct);
   const isCurrentProductLoading = useAppSelector(getisProductByIdLoading);
+  const [activeTab, setActiveTab] = useState<string>('Description');
 
   useEffect(() => {
     if (id !== undefined) {
       dispatch(getProductByIdAction(id));
     }
   }, [dispatch, id]);
+
+  const onСharacteristicButtonClick = () => {
+    setActiveTab('Characteristic');
+  };
+
+  const onDescriptionButtonClick = () => {
+    setActiveTab('Description');
+  };
 
   if (isCurrentProductLoading || !product) {
     return <LoadingScreen />;
@@ -96,15 +105,37 @@ export function ProductPage() {
                   </button>
                   <div className="tabs product__tabs">
                     <div className="tabs__controls product__tabs-controls">
-                      <button className="tabs__control" type="button">
+                      <button
+                        className={
+                          activeTab === 'Characteristic'
+                            ? 'tabs__control is-active'
+                            : 'tabs__control'
+                        }
+                        type="button"
+                        onClick={onСharacteristicButtonClick}
+                      >
                         Характеристики
                       </button>
-                      <button className="tabs__control is-active" type="button">
+                      <button
+                        className={
+                          activeTab === 'Description'
+                            ? 'tabs__control is-active'
+                            : 'tabs__control'
+                        }
+                        type="button"
+                        onClick={onDescriptionButtonClick}
+                      >
                         Описание
                       </button>
                     </div>
                     <div className="tabs__content">
-                      <div className="tabs__element">
+                      <div
+                        className={
+                          activeTab === 'Characteristic'
+                            ? 'tabs__element is-active'
+                            : 'tabs__element'
+                        }
+                      >
                         <ul className="product__tabs-list">
                           <li className="item-list">
                             <span className="item-list__title">Артикул:</span>
@@ -131,21 +162,15 @@ export function ProductPage() {
                           </li>
                         </ul>
                       </div>
-                      <div className="tabs__element is-active">
+                      <div
+                        className={
+                          activeTab === 'Description'
+                            ? 'tabs__element is-active'
+                            : 'tabs__element'
+                        }
+                      >
                         <div className="product__tabs-text">
-                          <p>
-                            {product.description}
-                            {/* Немецкий концерн BRW разработал видеокамеру Das Auge
-                            IV в&nbsp;начале 80-х годов, однако она до&nbsp;сих
-                            пор пользуется популярностью среди коллекционеров
-                            и&nbsp;яростных почитателей старинной техники. */}
-                          </p>
-                          {/* <p>
-                            Вы&nbsp;тоже можете прикоснуться к&nbsp;волшебству
-                            аналоговой съёмки, заказав этот чудо-аппарат. Кто
-                            знает, может с&nbsp;Das Auge IV&nbsp;начнётся ваш
-                            путь к&nbsp;наградам всех престижных кинофестивалей.
-                          </p> */}
+                          <p>{product.description}</p>
                         </div>
                       </div>
                     </div>
