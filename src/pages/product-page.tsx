@@ -32,6 +32,7 @@ export function ProductPage() {
   const isCurrentProductLoading = useAppSelector(getisProductByIdLoading);
   const isReviewsLoading = useAppSelector(getisReviewsLoading);
   const [activeTab, setActiveTab] = useState<string>('Description');
+  const [countReviews, setCountReviews] = useState<number>(MAX_COMMENTS_COUNT);
 
   useEffect(() => {
     if (id !== undefined) {
@@ -48,11 +49,15 @@ export function ProductPage() {
     setActiveTab('Description');
   };
 
-  function limitReviewsItems(allReviews: TReview[]) {
-    if (allReviews.length <= MAX_COMMENTS_COUNT) {
+  const onShowMoreReviewButtonClick = () => {
+    setCountReviews(countReviews + MAX_COMMENTS_COUNT);
+  };
+
+  function limitReviewsItems(allReviews: TReview[], count: number) {
+    if (allReviews.length <= count) {
       return sortingByDateReviews;
     } else {
-      return sortingByDateReviews.slice(0, MAX_COMMENTS_COUNT);
+      return sortingByDateReviews.slice(0, count);
     }
   }
 
@@ -452,12 +457,25 @@ export function ProductPage() {
                   <h2 className="title title--h3">Отзывы</h2>
                   {/*<button class="btn" type="button">Оставить свой отзыв</button>*/}
                 </div>
-                <ReviewList reviews={limitReviewsItems(sortingByDateReviews)} />
-                <div className="review-block__buttons">
-                  <button className="btn btn--purple" type="button">
-                    Показать больше отзывов
-                  </button>
-                </div>
+                <ReviewList
+                  reviews={limitReviewsItems(
+                    sortingByDateReviews,
+                    countReviews
+                  )}
+                />
+                {reviews.length > countReviews ? (
+                  <div className="review-block__buttons">
+                    <button
+                      className="btn btn--purple"
+                      type="button"
+                      onClick={onShowMoreReviewButtonClick}
+                    >
+                      Показать больше отзывов
+                    </button>
+                  </div>
+                ) : (
+                  <div></div>
+                )}
               </div>
             </section>
           </div>
