@@ -99,6 +99,7 @@ export function CatalogCallModal() {
                 name="user-tel"
                 placeholder="Введите ваш номер"
                 required
+                autoFocus
               />
             </label>
             <p className="custom-input__error">Нужно указать номер</p>
