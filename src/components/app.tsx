@@ -7,6 +7,7 @@ import LoadingScreen from '../pages/loading-screen/loading-screen';
 
 import { useAppSelector } from '../hooks/use-app-selector';
 import { getisProductsDataLoading } from '../store/products-data/products-data.selectors';
+import NotFoundPage from '../pages/not-found-page/not-found-page';
 
 function App(): React.JSX.Element {
   const isProductsDataLoadingStatus = useAppSelector(getisProductsDataLoading);
@@ -21,6 +22,7 @@ function App(): React.JSX.Element {
         <Routes>
           <Route path={AppRoute.Catalog} element={<CatalogPage />} />
           <Route path={`${AppRoute.Product}/:id`} element={<ProductPage />} />
+          <Route path={AppRoute.Error} element={<NotFoundPage />} />
         </Routes>
       </BrowserRouter>
     </HelmetProvider>
