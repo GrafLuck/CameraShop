@@ -10,6 +10,8 @@ export function CatalogCallModal() {
   const product = useAppSelector(getCurrentProduct);
   const isActive = useAppSelector(getIsCallModalActive);
   const overlay = useRef<HTMLDivElement | null>(null);
+  const inputRef = useRef<HTMLInputElement | null>(null);
+  const modalRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     const onOverlayClick = (evt: MouseEvent) => {
@@ -19,8 +21,8 @@ export function CatalogCallModal() {
       }
     };
 
-    const onEscapePress = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') {
+    const onEscapePress = (evt: KeyboardEvent) => {
+      if (evt.key === 'Escape') {
         dispatch(changeCallModalStatus(false));
       }
     };
@@ -33,6 +35,24 @@ export function CatalogCallModal() {
       window.removeEventListener('keydown', onEscapePress);
     };
   }, [dispatch]);
+
+  useEffect(() => {
+    if (inputRef) {
+      inputRef.current?.focus();
+    }
+  });
+
+  // useEffect(() => {
+  //   if (modalRef.current) {
+  //     modalRef.current?.setAttribute('tabindex', '0');
+
+  //     modalRef.addEventListener('focusout', (evt: KeyboardEvent) => {
+  //       if (!modalRef.contains(evt.relatedTarget)) {
+  //         modalRef.focus();
+  //       }
+  //     });
+  //   }
+  // });
 
   useEffect(() => {
     if (isActive) {
@@ -54,7 +74,7 @@ export function CatalogCallModal() {
   }
 
   return (
-    <div className={isActive ? ' modal is-active' : 'modal'}>
+    <div className={isActive ? ' modal is-active' : 'modal'} ref={modalRef}>
       <div className="modal__wrapper">
         <div className="modal__overlay" ref={overlay} />
         <div className="modal__content">
@@ -111,6 +131,7 @@ export function CatalogCallModal() {
                 placeholder="Введите ваш номер"
                 required
                 autoFocus
+                ref={inputRef}
               />
             </label>
             <p className="custom-input__error">Нужно указать номер</p>
