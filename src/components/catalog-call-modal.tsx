@@ -1,15 +1,38 @@
+import { useEffect, useRef } from 'react';
 import { useAppDispatch } from '../hooks/use-app-dispatch';
 import { useAppSelector } from '../hooks/use-app-selector';
 import { changeCallModalStatus } from '../store/modal-data/modal-data.slice';
 import { getCurrentProduct } from '../store/products-data/products-data.selectors';
+import { getIsCallModalActive } from '../store/modal-data/modal-data.selectors';
 
-type TCatalogCallModalProps = {
-  isActive: boolean;
-};
-
-export function CatalogCallModal({ isActive }: TCatalogCallModalProps) {
+export function CatalogCallModal() {
   const dispatch = useAppDispatch();
   const product = useAppSelector(getCurrentProduct);
+  const isActive = useAppSelector(getIsCallModalActive);
+  const overlay = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const onOverlayClick = (evt: MouseEvent) => {
+      const { current: target } = overlay;
+      if (target && target.contains(evt.target as HTMLElement)) {
+        dispatch(changeCallModalStatus(false));
+      }
+    };
+
+    const onEscapePress = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        dispatch(changeCallModalStatus(false));
+      }
+    };
+
+    window.addEventListener('click', onOverlayClick);
+    window.addEventListener('keydown', onEscapePress);
+
+    return () => {
+      window.removeEventListener('click', onOverlayClick);
+      window.removeEventListener('keydown', onEscapePress);
+    };
+  }, [dispatch]);
 
   const onCloseButtonClick = () => {
     dispatch(changeCallModalStatus(false));
@@ -22,7 +45,7 @@ export function CatalogCallModal({ isActive }: TCatalogCallModalProps) {
   return (
     <div className={isActive ? ' modal is-active' : 'modal'}>
       <div className="modal__wrapper">
-        <div className="modal__overlay" />
+        <div className="modal__overlay" ref={overlay} />
         <div className="modal__content">
           <p className="title title--h4">Свяжитесь со мной</p>
           <div className="basket-item basket-item--short">
