@@ -1,9 +1,10 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useAppDispatch } from '../hooks/use-app-dispatch';
 import { useAppSelector } from '../hooks/use-app-selector';
 import { changeCallModalStatus } from '../store/modal-data/modal-data.slice';
 import { getCurrentProduct } from '../store/products-data/products-data.selectors';
 import { getIsCallModalActive } from '../store/modal-data/modal-data.selectors';
+import { TELEPHONE_PATTERN } from '../const';
 
 export function CatalogCallModal() {
   const dispatch = useAppDispatch();
@@ -12,6 +13,7 @@ export function CatalogCallModal() {
   const overlay = useRef<HTMLDivElement | null>(null);
   const inputRef = useRef<HTMLInputElement | null>(null);
   const modalRef = useRef<HTMLDivElement | null>(null);
+  const [telephone, setTelephone] = useState('');
 
   useEffect(() => {
     const onOverlayClick = (evt: MouseEvent) => {
@@ -67,6 +69,16 @@ export function CatalogCallModal() {
 
   const onCloseButtonClick = () => {
     dispatch(changeCallModalStatus(false));
+  };
+
+  const onTelephoneButtonClick = () => {
+    const reg = RegExp(TELEPHONE_PATTERN);
+    console.log(telephone);
+    if (reg.test(telephone)) {
+      console.log(true);
+    } else {
+      console.log(false);
+    }
   };
 
   if (!product) {
@@ -132,6 +144,7 @@ export function CatalogCallModal() {
                 required
                 autoFocus
                 ref={inputRef}
+                onChange={(evt) => setTelephone(evt.target.value)}
               />
             </label>
             <p className="custom-input__error">Нужно указать номер</p>
@@ -140,6 +153,7 @@ export function CatalogCallModal() {
             <button
               className="btn btn--purple modal__btn modal__btn--fit-width"
               type="button"
+              onClick={onTelephoneButtonClick}
             >
               <svg width={24} height={16} aria-hidden="true">
                 <use xlinkHref="#icon-add-basket" />
