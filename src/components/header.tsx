@@ -1,37 +1,41 @@
+import { Link } from 'react-router-dom';
+import App from './app';
+import { AppRoute } from '../app-route';
+
 export function Header() {
   return (
     <header className="header" id="header">
       <div className="container">
-        <a
+        <Link
           className="header__logo"
-          href="index.html"
+          to={AppRoute.Catalog}
           aria-label="Переход на главную"
         >
           <svg width={100} height={36} aria-hidden="true">
             <use xlinkHref="#icon-logo" />
           </svg>
-        </a>
+        </Link>
         <nav className="main-nav header__main-nav">
           <ul className="main-nav__list">
             <li className="main-nav__item">
-              <a className="main-nav__link" href="catalog.html">
+              <Link className="main-nav__link" to={AppRoute.Catalog}>
                 Каталог
-              </a>
+              </Link>
             </li>
             <li className="main-nav__item">
-              <a className="main-nav__link" href="#">
+              <Link className="main-nav__link" to={AppRoute.Catalog}>
                 Гарантии
-              </a>
+              </Link>
             </li>
             <li className="main-nav__item">
-              <a className="main-nav__link" href="#">
+              <Link className="main-nav__link" to={AppRoute.Catalog}>
                 Доставка
-              </a>
+              </Link>
             </li>
             <li className="main-nav__item">
-              <a className="main-nav__link" href="#">
+              <Link className="main-nav__link" to={AppRoute.Catalog}>
                 О компании
-              </a>
+              </Link>
             </li>
           </ul>
         </nav>
