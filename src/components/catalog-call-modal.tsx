@@ -20,12 +20,14 @@ export function CatalogCallModal() {
       const { current: target } = overlay;
       if (target && target.contains(evt.target as HTMLElement)) {
         dispatch(changeCallModalStatus(false));
+        setTelephone('');
       }
     };
 
     const onEscapePress = (evt: KeyboardEvent) => {
       if (evt.key === 'Escape') {
         dispatch(changeCallModalStatus(false));
+        setTelephone('');
       }
     };
 
@@ -69,10 +71,12 @@ export function CatalogCallModal() {
 
   const onCloseButtonClick = () => {
     dispatch(changeCallModalStatus(false));
+    setTelephone('');
   };
 
   const onTelephoneButtonClick = () => {
     const reg = RegExp(TELEPHONE_PATTERN);
+    setTelephone('');
     console.log(telephone);
     if (reg.test(telephone)) {
       console.log(true);
@@ -143,6 +147,7 @@ export function CatalogCallModal() {
                 placeholder="Введите ваш номер"
                 required
                 autoFocus
+                value={telephone}
                 ref={inputRef}
                 onChange={(evt) => setTelephone(evt.target.value)}
               />
