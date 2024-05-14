@@ -1,5 +1,6 @@
 export enum APIRoute {
   Product = '/cameras',
+  Promo = '/promo'
 }
 
 export enum NameSpace {

@@ -6,13 +6,19 @@ import { ProductPage } from '../pages/product-page';
 import LoadingScreen from '../pages/loading-screen/loading-screen';
 
 import { useAppSelector } from '../hooks/use-app-selector';
-import { getisProductsDataLoading } from '../store/products-data/products-data.selectors';
+import {
+  getisProductsDataLoading,
+  getisPromoProductsDataLoading,
+} from '../store/products-data/products-data.selectors';
 import NotFoundPage from '../pages/not-found-page/not-found-page';
 
 function App(): React.JSX.Element {
   const isProductsDataLoadingStatus = useAppSelector(getisProductsDataLoading);
+  const isPromoProductsDataLoadingStatus = useAppSelector(
+    getisPromoProductsDataLoading
+  );
 
-  if (isProductsDataLoadingStatus) {
+  if (isProductsDataLoadingStatus || isPromoProductsDataLoadingStatus) {
     return <LoadingScreen />;
   }
 

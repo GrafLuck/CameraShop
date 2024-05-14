@@ -4,6 +4,7 @@ import { AppDispatch, State } from '../../types/state';
 import { APIRoute } from '../../const';
 import { TProduct } from '../../types/product';
 import { TReview } from '../../types/review';
+import { TPromo } from '../../types/promo';
 
 export const getProductsAction = createAsyncThunk<TProduct[], undefined, {
   dispatch: AppDispatch;
@@ -37,6 +38,18 @@ export const getReviewsByIdAction = createAsyncThunk<TReview[], string, {
   'reviewData/getReviewsById',
   async (id, {extra: api}) => {
     const {data} = await api.get<TReview[]>(`${APIRoute.Product}/${id}/reviews`);
+    return data;
+  },
+);
+
+export const getPromoActions = createAsyncThunk<TPromo[], undefined, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'productData/getPromo',
+  async (_arg, {extra: api}) => {
+    const {data} = await api.get<TPromo[]>(APIRoute.Promo);
     return data;
   },
 );

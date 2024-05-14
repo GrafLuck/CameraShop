@@ -4,16 +4,20 @@ import { Footer } from '../components/footer';
 import { Header } from '../components/header';
 import { ProductList } from '../components/product-list';
 import { useAppSelector } from '../hooks/use-app-selector';
-import { getProducts } from '../store/products-data/products-data.selectors';
+import {
+  getProducts,
+  getPromoProducts,
+} from '../store/products-data/products-data.selectors';
 
 export function CatalogPage() {
   const products = useAppSelector(getProducts);
+  const promoProdusts = useAppSelector(getPromoProducts);
 
   return (
     <div className="wrapper">
       <Header />
       <main>
-        <Banner product={products[0]} />
+        <Banner product={promoProdusts[0]} />
         <div className="page-content">
           <div className="breadcrumbs">
             <div className="container">

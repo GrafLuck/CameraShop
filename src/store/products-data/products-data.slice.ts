@@ -1,14 +1,16 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { NameSpace } from '../../const';
 import { TProductData } from '../../types/state';
-import { getProductByIdAction, getProductsAction } from '../actions/api-actions';
+import { getProductByIdAction, getProductsAction, getPromoActions } from '../actions/api-actions';
 import { TProduct } from '../../types/product';
 
 const initialState: TProductData = {
   products: [],
+  promoProducts: [],
   currentProduct: undefined,
   isProductsDataLoading: true,
   isProductByIdLoading: false,
+  isPromoProductsDataLoading: true,
 };
 
 export const productData = createSlice({
@@ -35,6 +37,16 @@ export const productData = createSlice({
       })
       .addCase(getProductByIdAction.rejected, (state) => {
         state.isProductByIdLoading = false;
+      })
+      .addCase(getPromoActions.pending, (state) => {
+        state.isPromoProductsDataLoading = true;
+      })
+      .addCase(getPromoActions.fulfilled, (state, action) => {
+        state.promoProducts = action.payload;
+        state.isPromoProductsDataLoading = false;
+      })
+      .addCase(getPromoActions.rejected, (state) => {
+        state.isPromoProductsDataLoading = false;
       });
   },
   reducers: {
