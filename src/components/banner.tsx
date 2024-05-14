@@ -1,4 +1,6 @@
+import { Link } from 'react-router-dom';
 import { TPromo } from '../types/promo';
+import { AppRoute } from '../app-route';
 
 type TBannerProps = {
   product: TPromo;
@@ -26,9 +28,9 @@ export function Banner({ product }: TBannerProps) {
         <span className="banner__text">
           Профессиональная камера от&nbsp;известного производителя
         </span>
-        <a className="btn" href="#">
+        <Link className="btn" to={`${AppRoute.Product}/${product.id}`}>
           Подробнее
-        </a>
+        </Link>
       </p>
     </div>
   );
