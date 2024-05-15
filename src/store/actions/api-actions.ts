@@ -18,7 +18,7 @@ export const getProductsAction = createAsyncThunk<TProduct[], undefined, {
   },
 );
 
-export const getProductByIdAction = createAsyncThunk<TProduct, string, {
+export const getProductByIdAction = createAsyncThunk<TProduct, number, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
@@ -30,7 +30,7 @@ export const getProductByIdAction = createAsyncThunk<TProduct, string, {
   },
 );
 
-export const getReviewsByIdAction = createAsyncThunk<TReview[], string, {
+export const getReviewsByIdAction = createAsyncThunk<TReview[], number, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
