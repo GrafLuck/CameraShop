@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { AppRoute } from '../app-route';
+import { AppRoute } from '../../app-route';
 
 export function Header() {
   return (

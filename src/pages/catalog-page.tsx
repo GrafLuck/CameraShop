@@ -1,8 +1,8 @@
 import { Banner } from '../components/banner';
 import { CatalogCallModal } from '../components/catalog-call-modal';
 import { Footer } from '../components/footer';
-import { Header } from '../components/header';
-import { ProductList } from '../components/product-list';
+import { Header } from '../components/header/header';
+import { ProductList } from '../components/product-list/product-list';
 import { useAppSelector } from '../hooks/use-app-selector';
 import {
   getProducts,
@@ -14,7 +14,7 @@ export function CatalogPage() {
   const promoProdusts = useAppSelector(getPromoProducts);
 
   return (
-    <div className="wrapper">
+    <div className="wrapper" data-testid="catalog-page">
       <Header />
       <main>
         <Banner product={promoProdusts[0]} />

@@ -1,6 +1,6 @@
 import { useParams } from 'react-router-dom';
 import { Footer } from '../components/footer';
-import { Header } from '../components/header';
+import { Header } from '../components/header/header';
 import { useAppDispatch } from '../hooks/use-app-dispatch';
 import {
   getProductByIdAction,
