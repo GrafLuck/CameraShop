@@ -1,20 +1,11 @@
-import { TReview } from '../types/review';
-import dayjs from 'dayjs';
-import 'dayjs/locale/ru';
+import { TReview } from '../../types/review';
+import { formatDate, humanizeDate } from '../../utils/util';
 
 type TReviewProps = {
   review: TReview;
 };
 
 export function Review({ review }: TReviewProps) {
-  function humanizeDate(date: string) {
-    return dayjs(date).locale('ru').format('DD MMMM');
-  }
-
-  function formatDate(date: string) {
-    return dayjs(date).format('YYYY-MM-DD');
-  }
-
   return (
     <li className="review-card">
       <div className="review-card__head">
