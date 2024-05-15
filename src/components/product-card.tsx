@@ -3,7 +3,7 @@ import { useAppDispatch } from '../hooks/use-app-dispatch';
 import { changeCallModalStatus } from '../store/modal-data/modal-data.slice';
 import { changeCurrentProduct } from '../store/products-data/products-data.slice';
 import { TProduct } from '../types/product';
-import { RatingStarList } from './rating-star-list';
+import { RatingStarList } from './rating-star-list/rating-star-list';
 import { AppRoute } from '../app-route';
 
 type TProductProps = {

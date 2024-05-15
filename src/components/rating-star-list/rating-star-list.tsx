@@ -1,4 +1,4 @@
-import { RatingStar } from './rating-star/rating-star';
+import { RatingStar } from '../rating-star/rating-star';
 
 type TRatingStarListProps = {
   rating: number;

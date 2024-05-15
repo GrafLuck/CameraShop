@@ -13,13 +13,13 @@ import {
   getisProductByIdLoading,
 } from '../store/products-data/products-data.selectors';
 import LoadingScreen from './loading-screen/loading-screen';
-import { RatingStarList } from '../components/rating-star-list';
+import { RatingStarList } from '../components/rating-star-list/rating-star-list';
 import {
   getReviews,
   getSortingByDateReviews,
   getisReviewsLoading,
 } from '../store/reviews-data/reviews-data.selectors';
-import { ReviewList } from '../components/review-list';
+import { ReviewList } from '../components/review-list/review-list';
 import { MAX_COMMENTS_COUNT } from '../const';
 import { TReview } from '../types/review';
 
