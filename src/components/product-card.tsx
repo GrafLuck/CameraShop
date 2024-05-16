@@ -39,6 +39,7 @@ export function ProductCard({ product }: TProductProps) {
         <RatingStarList
           rating={product.rating}
           reviewCount={product.reviewCount}
+          type={'product'}
         />
         <p className="product-card__title">{product.name}</p>
         <p className="product-card__price">

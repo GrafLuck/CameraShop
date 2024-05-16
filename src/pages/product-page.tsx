@@ -120,6 +120,7 @@ export function ProductPage() {
                   <RatingStarList
                     rating={product.rating}
                     reviewCount={product.reviewCount}
+                    type={'product'}
                   />
                   <p className="product__price">
                     <span className="visually-hidden">Цена:</span>

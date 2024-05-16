@@ -1,5 +1,6 @@
 import { TReview } from '../../types/review';
 import { formatDate, humanizeDate } from '../../utils/util';
+import { RatingStarList } from '../rating-star-list/rating-star-list';
 
 type TReviewProps = {
   review: TReview;
@@ -17,24 +18,7 @@ export function Review({ review }: TReviewProps) {
           {humanizeDate(review.createAt)}
         </time>
       </div>
-      <div className="rate review-card__rate">
-        <svg width={17} height={16} aria-hidden="true">
-          <use xlinkHref="#icon-full-star" />
-        </svg>
-        <svg width={17} height={16} aria-hidden="true">
-          <use xlinkHref="#icon-full-star" />
-        </svg>
-        <svg width={17} height={16} aria-hidden="true">
-          <use xlinkHref="#icon-full-star" />
-        </svg>
-        <svg width={17} height={16} aria-hidden="true">
-          <use xlinkHref="#icon-full-star" />
-        </svg>
-        <svg width={17} height={16} aria-hidden="true">
-          <use xlinkHref="#icon-full-star" />
-        </svg>
-        <p className="visually-hidden">Оценка: 5</p>
-      </div>
+      <RatingStarList rating={review.rating} reviewCount={0} type={'review'} />
       <ul className="review-card__list">
         <li className="item-list">
           <span className="item-list__title">Достоинства:</span>

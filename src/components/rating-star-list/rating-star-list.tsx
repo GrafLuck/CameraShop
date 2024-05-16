@@ -3,9 +3,14 @@ import { RatingStar } from '../rating-star/rating-star';
 type TRatingStarListProps = {
   rating: number;
   reviewCount: number;
+  type: 'product' | 'review';
 };
 
-export function RatingStarList({ rating, reviewCount }: TRatingStarListProps) {
+export function RatingStarList({
+  rating,
+  reviewCount,
+  type,
+}: TRatingStarListProps) {
   function makeRatingStarList(rate: number): JSX.Element[] {
     const ratingStarList = [];
     for (let i = 1; i <= 5; i++) {
@@ -19,13 +24,15 @@ export function RatingStarList({ rating, reviewCount }: TRatingStarListProps) {
   }
 
   return (
-    <div className="rate product-card__rate">
+    <div className={`rate ${type}-card__rate`}>
       {makeRatingStarList(rating)}
       <p className="visually-hidden">Рейтинг: {rating}</p>
-      <p className="rate__count">
-        <span className="visually-hidden">Всего оценок:</span>
-        {reviewCount}
-      </p>
+      {type === 'product' && (
+        <p className="rate__count">
+          <span className="visually-hidden">Всего оценок:</span>
+          {reviewCount}
+        </p>
+      )}
     </div>
   );
 }

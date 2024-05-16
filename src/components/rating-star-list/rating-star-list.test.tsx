@@ -6,9 +6,10 @@ describe('Component: RatingStarList', () => {
     const reviewCount = 10;
     const rating = 4;
     const countStars = 5;
+    const type = 'product';
 
     const { container } = render(
-      <RatingStarList reviewCount={reviewCount} rating={rating} />
+      <RatingStarList reviewCount={reviewCount} rating={rating} type={type} />
     );
 
     expect(screen.getByText('Всего оценок:')).toBeInTheDocument();
