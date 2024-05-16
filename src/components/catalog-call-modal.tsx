@@ -4,7 +4,11 @@ import { useAppSelector } from '../hooks/use-app-selector';
 import { changeCallModalStatus } from '../store/modal-data/modal-data.slice';
 import { getCurrentProduct } from '../store/products-data/products-data.selectors';
 import { getIsCallModalActive } from '../store/modal-data/modal-data.selectors';
-import { TELEPHONE_PATTERN } from '../const';
+import {
+  TELEPHONE_FIRST_SYMBOL_REPLACE_PATTERN,
+  TELEPHONE_PATTERN,
+  TELEPHONE_SYMBOL_REPLACE_PATTERN,
+} from '../const';
 
 export function CatalogCallModal() {
   const dispatch = useAppDispatch();
@@ -14,6 +18,11 @@ export function CatalogCallModal() {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const modalRef = useRef<HTMLDivElement | null>(null);
   const [telephone, setTelephone] = useState('');
+  const telephoneReg = RegExp(TELEPHONE_PATTERN);
+  const telephoneSymbolReplaceReg = RegExp(TELEPHONE_SYMBOL_REPLACE_PATTERN);
+  const telephoneFirstSymbolReplaceReg = RegExp(
+    TELEPHONE_FIRST_SYMBOL_REPLACE_PATTERN
+  );
 
   useEffect(() => {
     const onOverlayClick = (evt: MouseEvent) => {
@@ -40,11 +49,11 @@ export function CatalogCallModal() {
     };
   }, [dispatch]);
 
-  useEffect(() => {
-    if (inputRef) {
-      inputRef.current?.focus();
-    }
-  });
+  // useEffect(() => {
+  //   if (inputRef) {
+  //     inputRef.current?.focus();
+  //   }
+  // });
 
   // useEffect(() => {
   //   if (modalRef.current) {
@@ -60,12 +69,11 @@ export function CatalogCallModal() {
 
   useEffect(() => {
     if (isActive) {
-      document.body.style.overflow = 'hidden';
-      document.body.style.paddingRight = '17px';
+      document.body.classList.add('scroll-lock');
+      inputRef.current?.focus();
     }
     return () => {
-      document.body.style.overflow = 'unset';
-      document.body.style.paddingRight = '0px';
+      document.body.classList.remove('scroll-lock');
     };
   }, [isActive]);
 
@@ -75,11 +83,15 @@ export function CatalogCallModal() {
   };
 
   const onTelephoneButtonClick = () => {
-    const reg = RegExp(TELEPHONE_PATTERN);
-    setTelephone('');
     console.log(telephone);
-    if (reg.test(telephone)) {
+    if (telephoneReg.test(telephone)) {
       console.log(true);
+      console.log(
+        telephone
+          .replaceAll(telephoneSymbolReplaceReg, '')
+          .replace(telephoneFirstSymbolReplaceReg, '+7')
+      );
+      onCloseButtonClick();
     } else {
       console.log(false);
     }
