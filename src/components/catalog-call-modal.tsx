@@ -14,19 +14,19 @@ export function CatalogCallModal() {
   const dispatch = useAppDispatch();
   const product = useAppSelector(getCurrentProduct);
   const isActive = useAppSelector(getIsCallModalActive);
-  const overlay = useRef<HTMLDivElement | null>(null);
-  const inputRef = useRef<HTMLInputElement | null>(null);
-  const modalRef = useRef<HTMLDivElement | null>(null);
+  const overlayRef = useRef<HTMLDivElement | null>(null);
+  const inputRef = useRef<HTMLInputElement | null>();
   const [telephone, setTelephone] = useState('');
   const telephoneReg = RegExp(TELEPHONE_PATTERN);
   const telephoneSymbolReplaceReg = RegExp(TELEPHONE_SYMBOL_REPLACE_PATTERN);
   const telephoneFirstSymbolReplaceReg = RegExp(
     TELEPHONE_FIRST_SYMBOL_REPLACE_PATTERN
   );
+  inputRef.current?.focus();
 
   useEffect(() => {
     const onOverlayClick = (evt: MouseEvent) => {
-      const { current: target } = overlay;
+      const { current: target } = overlayRef;
       if (target && target.contains(evt.target as HTMLElement)) {
         dispatch(changeCallModalStatus(false));
         setTelephone('');
@@ -49,28 +49,9 @@ export function CatalogCallModal() {
     };
   }, [dispatch]);
 
-  // useEffect(() => {
-  //   if (inputRef) {
-  //     inputRef.current?.focus();
-  //   }
-  // });
-
-  // useEffect(() => {
-  //   if (modalRef.current) {
-  //     modalRef.current?.setAttribute('tabindex', '0');
-
-  //     modalRef.addEventListener('focusout', (evt: KeyboardEvent) => {
-  //       if (!modalRef.contains(evt.relatedTarget)) {
-  //         modalRef.focus();
-  //       }
-  //     });
-  //   }
-  // });
-
   useEffect(() => {
     if (isActive) {
       document.body.classList.add('scroll-lock');
-      inputRef.current?.focus();
     }
     return () => {
       document.body.classList.remove('scroll-lock');
@@ -102,9 +83,9 @@ export function CatalogCallModal() {
   }
 
   return (
-    <div className={isActive ? ' modal is-active' : 'modal'} ref={modalRef}>
+    <div className={isActive ? ' modal is-active' : 'modal'}>
       <div className="modal__wrapper">
-        <div className="modal__overlay" ref={overlay} />
+        <div className="modal__overlay" /*ref={overlayRef}*/ />
         <div className="modal__content">
           <p className="title title--h4">Свяжитесь со мной</p>
           <div className="basket-item basket-item--short">
@@ -158,7 +139,6 @@ export function CatalogCallModal() {
                 name="user-tel"
                 placeholder="Введите ваш номер"
                 required
-                autoFocus
                 value={telephone}
                 ref={inputRef}
                 onChange={(evt) => setTelephone(evt.target.value)}
