@@ -10,6 +10,6 @@ export enum NameSpace {
 }
 
 export const MAX_COMMENTS_COUNT = 3;
-export const TELEPHONE_PATTERN = /^((8|\+7))([( ]?9\d{2}[) ]?)?[\d]{3}[- ]?[\d]{2}[- ]?[\d]{2}$/gm;
-export const TELEPHONE_SYMBOL_REPLACE_PATTERN = /[() -]/gm;
-export const TELEPHONE_FIRST_SYMBOL_REPLACE_PATTERN = /^(8)/gm;
+export const TELEPHONE_PATTERN = /^((8|\+7))([( ]?9\d{2}[) ]?)?[\d]{3}[- ]?[\d]{2}[- ]?[\d]{2}$/g;
+export const TELEPHONE_SYMBOL_REPLACE_PATTERN = /[() -]/g;
+export const TELEPHONE_FIRST_SYMBOL_REPLACE_PATTERN = /^(8)/g;

@@ -65,17 +65,12 @@ export function CatalogCallModal() {
   };
 
   const onTelephoneButtonClick = () => {
-    console.log(telephone);
-    if (telephoneReg.test(telephone)) {
-      console.log(true);
-      console.log(
-        telephone
-          .replaceAll(telephoneSymbolReplaceReg, '')
-          .replace(telephoneFirstSymbolReplaceReg, '+7')
-      );
+    if (telephone.match(telephoneReg)) {
+      telephone
+        .replaceAll(telephoneSymbolReplaceReg, '')
+        .replace(telephoneFirstSymbolReplaceReg, '+7');
       onCloseButtonClick();
     } else {
-      console.log(false);
     }
   };
 
