@@ -77,8 +77,8 @@ export function CatalogCallModal() {
       );
     }
     if (!isOrdersDataSaving) {
-      if (orderSavingError.code === '400') {
-        console.log(orderSavingError);
+      if (orderSavingError.message) {
+        console.log(orderSavingError.message);
       } else {
         dispatch(changeCallModalStatus(false));
         setTelephone('');
