@@ -3,7 +3,7 @@ import { configureMockStore } from '@jedmao/redux-mock-store';
 import MockAdapter from 'axios-mock-adapter';
 import { State } from '../../types/state';
 import { Action } from 'redux';
-import { extractActionsTypes, makeFakeProduct, AppThunkDispatch, makeFakeReview, makeFakePromo, makeFakeorder } from '../../utils/mocks';
+import { extractActionsTypes, makeFakeProduct, AppThunkDispatch, makeFakeReview, makeFakePromo, makeFakeOrder } from '../../utils/mocks';
 import { createOrderAction, getProductByIdAction, getProductsAction, getPromoActions, getReviewsByIdAction } from './api-actions';
 import { APIRoute } from '../../const';
 import thunk from 'redux-thunk';
@@ -153,7 +153,7 @@ describe('Async actions', () => {
 
   describe('createOrderAction', () => {
     it('should dispatch "createOrderAction.pending" and "createOrderAction.fulfilled" when server response 201', async () => {
-      const mockOrder = makeFakeorder();
+      const mockOrder = makeFakeOrder();
       mockAxiosAdapter.onPost(APIRoute.Order).reply(201, mockOrder);
 
       await store.dispatch(createOrderAction({camerasIds: mockOrder.camerasIds, coupon: mockOrder.coupon, tel: mockOrder.tel}));
@@ -171,7 +171,7 @@ describe('Async actions', () => {
     });
 
     it('should dispatch "createOrderAction.pending" and "createOrderAction.rejected" when server response 400', async () => {
-      const mockOrder = makeFakeorder();
+      const mockOrder = makeFakeOrder();
       mockAxiosAdapter.onPost(APIRoute.Order).reply(400, []);
 
       await store.dispatch(createOrderAction({camerasIds: mockOrder.camerasIds, coupon: mockOrder.coupon, tel: mockOrder.tel}));

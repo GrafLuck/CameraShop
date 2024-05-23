@@ -13,7 +13,7 @@ import { createOrderAction } from '../store/actions/api-actions';
 import {
   getIsOrdersDataSaving,
   getOrderSavingError,
-} from '../store/orders-data/orders.data.selectors';
+} from '../store/orders-data/order-data.selectors';
 
 export function CatalogCallModal() {
   const dispatch = useAppDispatch();

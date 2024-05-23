@@ -68,7 +68,7 @@ export const makeFakePromo = () : TPromo => ({
   previewImgWebp2x: image.image(),
 }) as TPromo;
 
-export const makeFakeorder = () : TOrder => ({
+export const makeFakeOrder = () : TOrder => ({
   camerasIds: [datatype.number({
     min: 1,
     max: 100,

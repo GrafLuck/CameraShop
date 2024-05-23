@@ -3,7 +3,7 @@ import {NameSpace} from '../const';
 import { productData } from './products-data/products-data.slice';
 import { modalData } from './modal-data/modal-data.slice';
 import { reviewData } from './reviews-data/reviews-data.slice';
-import { orderData } from './orders-data/orders.data.slice';
+import { orderData } from './orders-data/order-data.slice';
 
 export const rootReducer = combineReducers({
   [NameSpace.Product]: productData.reducer,
