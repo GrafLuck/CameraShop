@@ -9,11 +9,18 @@ import {
   TELEPHONE_PATTERN,
   TELEPHONE_SYMBOL_REPLACE_PATTERN,
 } from '../const';
+import { createOrderAction } from '../store/actions/api-actions';
+import {
+  getIsOrdersDataSaving,
+  getOrderSavingError,
+} from '../store/orders-data/orders.data.selectors';
 
 export function CatalogCallModal() {
   const dispatch = useAppDispatch();
   const product = useAppSelector(getCurrentProduct);
   const isActive = useAppSelector(getIsCallModalActive);
+  const isOrdersDataSaving = useAppSelector(getIsOrdersDataSaving);
+  const orderSavingError = useAppSelector(getOrderSavingError);
   const overlayRef = useRef<HTMLDivElement | null>(null);
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [telephone, setTelephone] = useState('');
@@ -59,6 +66,26 @@ export function CatalogCallModal() {
     };
   });
 
+  async function saveOrder(telephoneOrder: string) {
+    if (product) {
+      await dispatch(
+        createOrderAction({
+          camerasIds: [product?.id],
+          tel: telephoneOrder,
+          coupon: '',
+        })
+      );
+    }
+    if (!isOrdersDataSaving) {
+      if (orderSavingError.code === '400') {
+        console.log(orderSavingError);
+      } else {
+        dispatch(changeCallModalStatus(false));
+        setTelephone('');
+      }
+    }
+  }
+
   const onCloseButtonClick = () => {
     dispatch(changeCallModalStatus(false));
     setTelephone('');
@@ -66,11 +93,10 @@ export function CatalogCallModal() {
 
   const onTelephoneButtonClick = () => {
     if (telephone.match(telephoneReg)) {
-      telephone
+      const validateTelephone = telephone
         .replaceAll(telephoneSymbolReplaceReg, '')
         .replace(telephoneFirstSymbolReplaceReg, '+7');
-      onCloseButtonClick();
-    } else {
+      saveOrder(validateTelephone);
     }
   };
 

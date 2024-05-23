@@ -1,3 +1,4 @@
+import { SerializedError } from '@reduxjs/toolkit';
 import { store } from '../store/stores';
 import { TProduct } from './product';
 import { TPromo } from './promo';
@@ -24,4 +25,9 @@ export type TReviewData = {
   reviews: TReview[];
   sortingByDateReviews: TReview[];
   isReviewsDataLoading: boolean;
+}
+
+export type TOrderData = {
+  error: SerializedError;
+  isOrdersDataSaving: boolean;
 }

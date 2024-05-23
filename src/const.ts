@@ -1,12 +1,14 @@
 export enum APIRoute {
   Product = '/cameras',
-  Promo = '/promo'
+  Promo = '/promo',
+  Order = 'orders',
 }
 
 export enum NameSpace {
   Product = 'PRODUCT',
   Modal = 'MODAL',
   Review = 'REVIEW',
+  Order = 'ORDER',
 }
 
 export const MAX_COMMENTS_COUNT = 3;
