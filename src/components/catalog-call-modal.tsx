@@ -15,14 +15,13 @@ export function CatalogCallModal() {
   const product = useAppSelector(getCurrentProduct);
   const isActive = useAppSelector(getIsCallModalActive);
   const overlayRef = useRef<HTMLDivElement | null>(null);
-  const inputRef = useRef<HTMLInputElement | null>();
+  const inputRef = useRef<HTMLInputElement | null>(null);
   const [telephone, setTelephone] = useState('');
   const telephoneReg = RegExp(TELEPHONE_PATTERN);
   const telephoneSymbolReplaceReg = RegExp(TELEPHONE_SYMBOL_REPLACE_PATTERN);
   const telephoneFirstSymbolReplaceReg = RegExp(
     TELEPHONE_FIRST_SYMBOL_REPLACE_PATTERN
   );
-  inputRef.current?.focus();
 
   useEffect(() => {
     const onOverlayClick = (evt: MouseEvent) => {
@@ -50,13 +49,15 @@ export function CatalogCallModal() {
   }, [dispatch]);
 
   useEffect(() => {
-    if (isActive) {
-      document.body.classList.add('scroll-lock');
+    document.body.classList.add('scroll-lock');
+    if (inputRef.current) {
+      inputRef.current.focus();
     }
+
     return () => {
       document.body.classList.remove('scroll-lock');
     };
-  }, [isActive]);
+  });
 
   const onCloseButtonClick = () => {
     dispatch(changeCallModalStatus(false));
@@ -85,7 +86,7 @@ export function CatalogCallModal() {
   return (
     <div className={isActive ? ' modal is-active' : 'modal'}>
       <div className="modal__wrapper">
-        <div className="modal__overlay" /*ref={overlayRef}*/ />
+        <div className="modal__overlay" ref={overlayRef} />
         <div className="modal__content">
           <p className="title title--h4">Свяжитесь со мной</p>
           <div className="basket-item basket-item--short">

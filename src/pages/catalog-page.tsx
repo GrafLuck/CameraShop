@@ -4,6 +4,7 @@ import { Footer } from '../components/footer';
 import { Header } from '../components/header/header';
 import { ProductList } from '../components/product-list/product-list';
 import { useAppSelector } from '../hooks/use-app-selector';
+import { getIsCallModalActive } from '../store/modal-data/modal-data.selectors';
 import {
   getProducts,
   getPromoProducts,
@@ -12,6 +13,7 @@ import {
 export function CatalogPage() {
   const products = useAppSelector(getProducts);
   const promoProdusts = useAppSelector(getPromoProducts);
+  const isActive = useAppSelector(getIsCallModalActive);
 
   return (
     <div className="wrapper" data-testid="catalog-page">
@@ -175,7 +177,7 @@ export function CatalogPage() {
             </div>
           </section>
         </div>
-        <CatalogCallModal />
+        {isActive ? <CatalogCallModal /> : ''}
       </main>
       <Footer />
     </div>
