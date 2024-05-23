@@ -3,8 +3,8 @@ import { configureMockStore } from '@jedmao/redux-mock-store';
 import MockAdapter from 'axios-mock-adapter';
 import { State } from '../../types/state';
 import { Action } from 'redux';
-import { extractActionsTypes, makeFakeProduct, AppThunkDispatch, makeFakeReview, makeFakePromo } from '../../utils/mocks';
-import { getProductByIdAction, getProductsAction, getPromoActions, getReviewsByIdAction } from './api-actions';
+import { extractActionsTypes, makeFakeProduct, AppThunkDispatch, makeFakeReview, makeFakePromo, makeFakeorder } from '../../utils/mocks';
+import { createOrderAction, getProductByIdAction, getProductsAction, getPromoActions, getReviewsByIdAction } from './api-actions';
 import { APIRoute } from '../../const';
 import thunk from 'redux-thunk';
 
@@ -57,7 +57,7 @@ describe('Async actions', () => {
       const mockProduct = makeFakeProduct();
       mockAxiosAdapter.onGet(`${APIRoute.Product}/${mockProduct.id}`).reply(200, mockProduct);
 
-      await store.dispatch(getProductByIdAction(mockProduct.id));
+      await store.dispatch(getProductByIdAction(mockProduct.id.toString()));
 
       const emittedActions = store.getActions();
       const extractedActionsTypes = extractActionsTypes(emittedActions);
@@ -75,7 +75,7 @@ describe('Async actions', () => {
       const mockProduct = makeFakeProduct();
       mockAxiosAdapter.onGet(`${APIRoute.Product}/${mockProduct.id}`).reply(400, []);
 
-      await store.dispatch(getProductByIdAction(mockProduct.id));
+      await store.dispatch(getProductByIdAction(mockProduct.id.toString()));
       const actions = extractActionsTypes(store.getActions());
 
       expect(actions).toEqual([
@@ -91,7 +91,7 @@ describe('Async actions', () => {
       const mockReview = makeFakeReview();
       mockAxiosAdapter.onGet(`${APIRoute.Product}/${mockReview.cameraId}/reviews`).reply(200, mockReview);
 
-      await store.dispatch(getReviewsByIdAction(mockReview.cameraId));
+      await store.dispatch(getReviewsByIdAction(mockReview.cameraId.toString()));
 
       const emittedActions = store.getActions();
       const extractedActionsTypes = extractActionsTypes(emittedActions);
@@ -109,7 +109,7 @@ describe('Async actions', () => {
       const mockReview = makeFakeReview();
       mockAxiosAdapter.onGet(`${APIRoute.Product}/${mockReview.cameraId}/reviews`).reply(400, []);
 
-      await store.dispatch(getReviewsByIdAction(mockReview.cameraId));
+      await store.dispatch(getReviewsByIdAction(mockReview.cameraId.toString()));
       const actions = extractActionsTypes(store.getActions());
 
       expect(actions).toEqual([
@@ -147,6 +147,39 @@ describe('Async actions', () => {
       expect(actions).toEqual([
         getPromoActions.pending.type,
         getPromoActions.rejected.type,
+      ]);
+    });
+  });
+
+  describe('createOrderAction', () => {
+    it('should dispatch "createOrderAction.pending" and "createOrderAction.fulfilled" when server response 201', async () => {
+      const mockOrder = makeFakeorder();
+      mockAxiosAdapter.onPost(APIRoute.Order).reply(201, mockOrder);
+
+      await store.dispatch(createOrderAction({camerasIds: mockOrder.camerasIds, coupon: mockOrder.coupon, tel: mockOrder.tel}));
+
+      const emittedActions = store.getActions();
+      const extractedActionsTypes = extractActionsTypes(emittedActions);
+      const createOrderActionFulfilled = emittedActions.at(1) as ReturnType<typeof createOrderAction.fulfilled>;
+
+      expect(extractedActionsTypes).toEqual([
+        createOrderAction.pending.type,
+        createOrderAction.fulfilled.type,
+      ]);
+
+      expect(createOrderActionFulfilled.payload).toEqual(undefined);
+    });
+
+    it('should dispatch "createOrderAction.pending" and "createOrderAction.rejected" when server response 400', async () => {
+      const mockOrder = makeFakeorder();
+      mockAxiosAdapter.onPost(APIRoute.Order).reply(400, []);
+
+      await store.dispatch(createOrderAction({camerasIds: mockOrder.camerasIds, coupon: mockOrder.coupon, tel: mockOrder.tel}));
+      const actions = extractActionsTypes(store.getActions());
+
+      expect(actions).toEqual([
+        createOrderAction.pending.type,
+        createOrderAction.rejected.type,
       ]);
     });
   });

@@ -5,6 +5,7 @@ import { random, datatype, lorem, image, name} from 'faker';
 import { State } from '../types/state';
 import { TReview } from '../types/review';
 import { TPromo } from '../types/promo';
+import { TOrder } from '../types/order';
 
 export type AppThunkDispatch = ThunkDispatch<State, ReturnType<typeof createAPI>, Action>;
 
@@ -66,5 +67,14 @@ export const makeFakePromo = () : TPromo => ({
   previewImgWebp: image.image(),
   previewImgWebp2x: image.image(),
 }) as TPromo;
+
+export const makeFakeorder = () : TOrder => ({
+  camerasIds: [datatype.number({
+    min: 1,
+    max: 100,
+  })],
+  coupon: '',
+  tel: '+79211234567',
+});
 
 export const extractActionsTypes = (actions: Action<string>[]) => actions.map(({type}) => type);

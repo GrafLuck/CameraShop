@@ -78,7 +78,6 @@ export function CatalogCallModal() {
     }
     if (!isOrdersDataSaving) {
       if (orderSavingError.message) {
-        console.log(orderSavingError.message);
       } else {
         dispatch(changeCallModalStatus(false));
         setTelephone('');
